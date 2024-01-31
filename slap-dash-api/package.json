@@ -2,17 +2,26 @@
   "name": "slap-dash-api",
   "version": "1.0.0",
   "description": "api for slap dash game",
-  "main": "app.ts",
+  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node app.ts"
+    "build": "npx tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts"
   },
   "type": "commonjs",
   "author": "Carl Caffrey",
   "license": "ISC",
   "dependencies": {
+    "@types/express-validator": "^3.0.0",
+    "dotenv": "^16.4.1",
     "express": "^4.18.2",
-    "graphql-request": "^6.1.0",
+    "express-validator": "^7.0.1",
+    "graphql-request": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "nodemon": "^3.0.3",
     "ts-node": "^10.9.2"
   }
 }
