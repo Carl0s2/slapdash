@@ -1,0 +1,18 @@
+{
+  "name": "slap-dash-api",
+  "version": "1.0.0",
+  "description": "api for slap dash game",
+  "main": "app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node app.ts"
+  },
+  "type": "commonjs",
+  "author": "Carl Caffrey",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "graphql-request": "^6.1.0",
+    "ts-node": "^10.9.2"
+  }
+}
