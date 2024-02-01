@@ -1,6 +1,6 @@
-export type Score = {
-  id: string; // guid
-  userId: string; // foreign key to user
-  gameId: string; // foreign key to game
+export interface Score {
+  id: number; // guid
+  userId: number; // foreign key to user
+  gameId: number; // foreign key to game
   score: number; // score for the game
 };

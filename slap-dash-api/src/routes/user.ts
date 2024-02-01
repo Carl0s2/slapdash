@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 
-import { Game } from "../models/game";
+import { User } from "../models/user";
 import { dataStore } from "../repository/dataStore";
 
 const router = Router();
