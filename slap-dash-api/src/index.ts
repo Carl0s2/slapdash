@@ -1,17 +1,15 @@
 import express, { Express, NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
-import questionRoutes from "./routes/question";
-import gameRoutes from "./routes/game";
+import gameController from "./controller/game";
+import userController from "./controller/user"
 
 dotenv.config();
 
-import { getCharacters } from "./services/question";
-
 const app: Express = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.use(express.json());
-app.use("/api/questions", questionRoutes);
-app.use("/api/game", gameRoutes)
+app.use("/api/game", gameController)
+app.use("/api/user", userController)
 // app.use(express.urlencoded({ extended: true }));
 // app.use(express.static("public"));
 

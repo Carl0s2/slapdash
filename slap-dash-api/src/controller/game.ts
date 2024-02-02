@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 
-import { User } from "../models/user";
-import { dataStore } from "../repository/dataStore";
+import { Game } from "../models/game";
+import { gameService } from "../services/game";
 
 const router = Router();
 
@@ -13,24 +13,18 @@ const router = Router();
 //   body("completed").isBoolean().withMessage("Completed must be a boolean"),
 // ];
 
-router.post("/", (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
 
-  const game: Game = {
-    id: '1',
-    userId: '1',
-    questionIndex:1,
-    questionNumber: 10,
-    completed: false,
-    timeLimit: 10,
-  };
 
-  dataStore.addGame(game)
+  const game = await gameService.createGame(req.body.userId);
+  
   res.status(201).json(game);
+
 });
 
-router.get("/", (req: Request, res: Response) => {
-  res.json(dataStore.getGames());
-});
+// router.get("/", (req: Request, res: Response) => {
+//   res.json());
+// });
 // router.get("/:id", (req: Request, res: Response) => {
 //   const question = questions.find((t) => t.id === parseInt(req.params.id));
 
