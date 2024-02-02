@@ -50,9 +50,9 @@ export const getCharacters = async (number: number = 4 ) => {
   // get random page to get 4 different characters
   // this method is bad as characters will be grouped in the same order.
   // better random would be doing random id and fetching each character individually
-  // const page = randomIntFromInterval(1,totalChars - number); 
-  // const results = await graphQLClient.request(getCharactersQuery, {number, page});
-  return mockReturn;
+  const page = randomIntFromInterval(1,totalChars - number); 
+  const results = await graphQLClient.request(getCharactersQuery, {number, page});
+  // return mockReturn;
 };
 
 

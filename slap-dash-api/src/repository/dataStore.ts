@@ -88,6 +88,25 @@ export module dataStore{
     }
   }
 
+  export function getAllByKey(storeType: StoreType, id: number | string, key: string = 'id' ){
+    switch (storeType) {
+      case StoreType.games:
+        return games.filter(x => x[key as keyof Game] === id);
+      case StoreType.questions:
+        return questions.filter(x => x[key as keyof Question] === id);
+      case StoreType.options:
+        return options.filter(x => x[key as keyof Option] === id);
+      case StoreType.users:
+        return users.filter(x => x[key as keyof User] === id);
+      case StoreType.scores:
+        return scores.filter(x => x[key as keyof Score] === id);
+      case StoreType.answers:
+        return answers.filter(x => x[key as keyof Answer] === id)
+      default:
+        return;
+    }
+  }
+
   export function getByComposite(storeType: StoreType, key1: string, key2: string, value1: string | number, value2: string | number) {
     switch (storeType) {
       case StoreType.scores:

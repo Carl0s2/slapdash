@@ -18,30 +18,18 @@ router.post("/", userValidationRules, async (req: Request, res: Response) => {
   
     res.status(201).json(user);
     
-  } catch(e){
-    res.status(500).json(e);
+  } catch(e: any){
+    res.status(500).json(JSON.stringify({message: e.message}))
   }
 });
 
 router.get("/", (req: Request, res: Response) => {
   try{
-
     const users = userService.getUsers();
-    res.json(users);
-  } catch (e) {
-    res.json(e);
+    res.status(201).json(users);
+  } catch (e: any) {
+    res.status(500).json(JSON.stringify({message: e.message}))
   }
 });
-// router.get("/:id", (req: Request, res: Response) => {
-//   const question = questions.find((t) => t.id === parseInt(req.params.id));
-
-//   if (!question) {
-//     res.status(404).send("Question not found");
-//   } else {
-//     res.json(question);
-//   }
-// });
-
-
 
 export default router;

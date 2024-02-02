@@ -4,6 +4,7 @@ import { Question } from "../models/question";
 import { dataStore } from "../repository/dataStore";
 import { randomIntFromInterval } from "../utils";
 import { getCharacters } from "./disneyCharacters";
+import { getPokemons } from "./pokemons";
 
 export module questionService {
   const STORE = dataStore.StoreType.questions
@@ -12,7 +13,7 @@ export module questionService {
     const game = dataStore.getById(dataStore.StoreType.games, gameId) as Game;
     if (!game) throw new Error(`Game not found for id ${gameId}`);
     // check game hasnt already started
-    if (game.questionIndex > 1) throw new Error('Game already started');
+    if (game.questionIndex > 0) throw new Error('Game already started');
 
     for (let index = 0; index < game.questionNumber; index++) {
       await createQuestion(game.id, index);
@@ -27,14 +28,19 @@ export module questionService {
       gameId,
       imageUrl: "", // will update with selected answer character image
       question: "Who is this?", // just going to have one type of question to start with
-      questionIndex: index,
+      questionIndex: index + 1,
     } );
     if (!question) throw new Error("Failed to create question");
     
     // this is default as the requirements
     const numberOfOptions = 4;
     // todo: add types
-    const characters = await getCharacters(numberOfOptions) as any[];
+    // disney api not working so switching to pokemon 
+    // todo: enable way to switch what api you pull characters from
+    // const characters = await getCharacters(numberOfOptions) as any[];
+
+    const characters = (await getPokemons(numberOfOptions)).results;
+
     // randomly select correct option
     const correctIndex = randomIntFromInterval(0, numberOfOptions - 1);
     characters.forEach((c,i) => {
@@ -47,7 +53,7 @@ export module questionService {
        });
        // set question image when correct
        if (isCorrect) {
-        dataStore.updateById(STORE, question.id, {...question, imageUrl: c.imageUrl})
+        dataStore.updateById(STORE, question.id, {...question, imageUrl: c.image})
        }
     });
     return question;
