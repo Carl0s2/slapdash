@@ -1,25 +1,36 @@
-<script setup lang="ts">
+<script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import TheMessage from './components/TheMessage.vue'
+import TheSnackbar from './components/TheSnackbar.vue'
+import StartGameView from './views/StartGameView.vue'
+import NextQuestionView from './views/NextQuestionView.vue'
+import QuestionView from './views/QuestionView.vue'
+import {useGameStore} from './stores/game'
+export default {
+  setup() {
+    const gameStore = useGameStore()
+  return {gameStore}
+  },
+  components: { TheMessage, StartGameView, TheSnackbar, NextQuestionView, QuestionView }
+}
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
+    <img alt="Image" class="mainImage" :src="gameStore.imageUrl" width="125" height="125" />
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-      <VCard color="blue"> it should be blue</VCard>
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+      <TheMessage :msg="gameStore.mainMsg" :subMsg="gameStore.subMsg" />
     </div>
   </header>
-
-  <RouterView />
+  <main>
+    <StartGameView v-if="gameStore.gameState === 'start'"></StartGameView>
+    <NextQuestionView v-else-if="gameStore.gameState === 'nextQuestion'"></NextQuestionView>
+    <QuestionView v-else-if="gameStore.gameState === 'question'"></QuestionView>
+    <TheSnackbar></TheSnackbar>
+  </main>
 </template>
+
 
 <style scoped>
 header {
@@ -27,7 +38,7 @@ header {
   max-height: 100vh;
 }
 
-.logo {
+.mainImage {
   display: block;
   margin: 0 auto 2rem;
 }

@@ -48,18 +48,13 @@ export module gameService {
     return game;
   }
 
-  // notes
-  // way to ensure that user is within time limit
-  // create new score on question start with time stamp
-  // upon sumit answer, take another time stamp
-  // if outside of time, no points for user, even if correct 
-  // game id could be infered here
+
   export function submitQuestionAnswer(gameId: number, userId: number, optionId: number) : boolean {
      const game = getGame(gameId);
      const score = dataStore.getByComposite(dataStore.StoreType.scores, "userId", "gameId", userId, gameId) as Score;
      if (!score?.roundStart) throw new Error("Error with getting user score");
      const insideTimeLimit = checkTime(score.roundStart, game.timeLimit);
-     // could do a few things here, could return false or error
+     // could do a few things here to prevent submission, for now will just return false
      if (!insideTimeLimit) return false;
      const option = dataStore.getById(dataStore.StoreType.options, optionId) as Option;
      // check user already summited answer to prevent multiple score submissions
@@ -81,13 +76,12 @@ export module gameService {
     
     // complete game
     if (game.questionIndex === game.questionNumber) {
-      dataStore.updateById(STORE, game.id, {...game, completed: true});
-      return game;
+      return dataStore.updateById(STORE, game.id, {...game, completed: true}) as Game;
     };
-    dataStore.updateById(STORE, game.id, {...game, questionIndex: game.questionIndex + 1});
+    const updatedGame = dataStore.updateById(STORE, game.id, {...game, questionIndex: game.questionIndex + 1});
     // trigger timer
     scoreService.startRoundTimer(game.id);
-    return game;
+    return updatedGame;
   }
   
   export function getGame(id: number): Game {

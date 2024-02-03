@@ -12,9 +12,9 @@ router.post("/", async (req: Request, res: Response) => {
 
     const game = await gameService.createGame(req.body.userId);
     
-    res.status(201).json(game);
+    res.status(201).send(game);
   } catch (e: any){
-    res.status(500).json(JSON.stringify({message: e.message}))
+    res.status(500).send(JSON.stringify({message: e.message}))
   }
 
 });
@@ -23,9 +23,9 @@ router.post("/", async (req: Request, res: Response) => {
 router.get("/:id", (req: Request, res: Response) => {
   try{
     const game = gameService.getGame(req.body.id)
-    res.status(201).json(game);
+    res.status(201).send(game);
   } catch (e) {
-    res.status(404).json({message: "game not found"})
+    res.status(404).send({message: "game not found"})
   }
 });
 
@@ -39,9 +39,9 @@ router.get("/:id/question", (req: Request, res: Response) => {
     const question = questionService.getQuestionByIndex(game.id, game.questionIndex);
     const options = optionService.getOptionsByQuestionId(question.id);
     
-    res.status(201).json({question, options});
+    res.status(201).send({question, options});
   } catch (e: any) {
-    res.status(500).json(JSON.stringify({message: e.message}))
+    res.status(500).send(JSON.stringify({message: e.message}))
   }
 });
 // get user score for the game
@@ -49,9 +49,9 @@ router.get("/:id/score/:userId", (req: Request, res: Response) => {
   try{
     const game = gameService.getGame(parseInt(req.params.id, 10));
     const score = scoreService.getUserGameScore(parseInt(req.params.userId, 10), game.id);
-    res.status(201).json(score.score);
+    res.status(201).send(score.score);
   } catch (e: any) {
-    res.status(500).json(JSON.stringify({message: e.message}))
+    res.status(500).send(JSON.stringify({message: e.message}))
   }
 });
 // submit user answer
@@ -59,18 +59,19 @@ router.post("/:id/user/:userId/answer/:optionId", (req: Request, res: Response) 
   try{
     const game = gameService.getGame(parseInt(req.params.id, 10));
     const correct = gameService.submitQuestionAnswer(game.id, parseInt(req.params.userId, 10), parseInt(req.params.optionId, 10));
-    res.status(201).json(correct);
+    res.status(201).send(correct);
   } catch (e:any) {
-    res.status(500).json(JSON.stringify({message: e.message}))
+    res.status(500).send(JSON.stringify({message: e.message}))
   }
 });
 // move to next round / start round
 router.post("/:id/next", (req: Request, res: Response) => {
   try{
     const game = gameService.nextQuestion(parseInt(req.params.id, 10));
-    res.status(202).json(game);
+    console.log(game)
+    res.status(202).send(game);
   } catch (e:any) {
-    res.status(500).json(JSON.stringify({message: e.message}))
+    res.status(500).send(JSON.stringify({message: e.message}))
   }
 });
 

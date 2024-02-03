@@ -10,25 +10,26 @@ const userValidationRules = [
 
 router.post("/", userValidationRules, async (req: Request, res: Response) => {
   const errors = validationResult(req);
+  console.log('user route')
   if (!errors.isEmpty()) {
-    return res.status(400).json(errors);
+    return res.status(400).send(errors);
   }
   try {
-    const user = await userService.createUser(req.body.name)
-  
-    res.status(201).json(user);
+    const user = await userService.createUser(req.body.name);
+    console.log(user);
+    res.status(201).send(user);
     
   } catch(e: any){
-    res.status(500).json(JSON.stringify({message: e.message}))
+    res.status(500).send(JSON.stringify({message: e.message}))
   }
 });
 
 router.get("/", (req: Request, res: Response) => {
   try{
     const users = userService.getUsers();
-    res.status(201).json(users);
+    res.status(201).send(users);
   } catch (e: any) {
-    res.status(500).json(JSON.stringify({message: e.message}))
+    res.status(500).send(JSON.stringify({message: e.message}));
   }
 });
 
