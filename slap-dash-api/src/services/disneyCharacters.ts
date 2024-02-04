@@ -26,26 +26,6 @@ const getCharactersQuery = gql`
   }
 `;
 
-const mockReturn = [
-  {
-  name: 'A',
-  imageUrl: 'www.bbc.co.uk'
-},
-  {
-  name: 'B',
-  imageUrl: 'www.bbc.co.uk'
-},
-  {
-  name: 'C',
-  imageUrl: 'www.bbc.co.uk'
-},
-  {
-  name: 'D',
-  imageUrl: 'www.bbc.co.uk'
-},
-
-];
-
 export const getCharacters = async (number: number = 4 ) => {
   // get random page to get 4 different characters
   // this method is bad as characters will be grouped in the same order.

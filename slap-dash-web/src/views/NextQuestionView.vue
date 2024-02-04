@@ -1,5 +1,9 @@
 <template>
-  <v-sheet max-width="300" class="mx-auto mt-5">
+  <v-sheet max-width="400" class="mx-auto mt-12" v-if="loading">
+    <VProgressCircular color="primary" indeterminate></VProgressCircular>
+  </v-sheet>
+  <v-sheet max-width="400" class="mx-auto mt-12" v-else>
+      <CurrentScore />
       <v-btn
         color="success"
         class="mt-2"
@@ -12,41 +16,53 @@
 
 </template>
 <script lang="ts">
+import CurrentScore from '@/components/CurrentScore.vue'
 import { useGameStore } from '@/stores/game'
 import { useSnackbar } from '@/stores/snackbar'
 import axios from 'axios'
 export default {
-    setup() {
+  setup() {
       const gameStore = useGameStore()
       const snackbar = useSnackbar()
     return {gameStore, snackbar}
-    },   
-   data: () => ({
+  },   
+  components: {CurrentScore},
+  data: () => ({
       loading: false
     }),
-    methods: {
-      async submit(){
-        axios.post(`http://localhost:5000/api/game/${this.gameStore.game.id}/next/`)
-          .then( (response) => {
-            console.log(response);
-            this.gameStore.game = response.data
-            this.loading = true;
-            axios.get(`http://localhost:5000/api/game/${this.gameStore.game.id}/question/`)
-              .then((response) => {
-                const {question, options} = response.data;
-                this.gameStore.question = question
-                this.gameStore.options = options
-                this.loading = false
-              }).catch((response) => {
-                this.snackbar.text = response.data.message
-                this.snackbar.show = true
-              })
-          }).catch((response) => {
-            this.snackbar.text = response.data.message
-            this.snackbar.show = true
-          })
-      }
+  mounted(){
+    if(this.gameStore.game.questionIndex === this.gameStore.game.questionNumber){
+      axios.post(`http://localhost:5000/api/game/${this.gameStore.game.id}/next/`)
+        .then( (response) => {
+          this.gameStore.game = response.data
+        }).catch((response) => {
+          this.snackbar.text = response.data.message
+          this.snackbar.show = true
+        })
     }
+  },
+  methods: {
+    async submit(){
+      axios.post(`http://localhost:5000/api/game/${this.gameStore.game.id}/next/`)
+        .then( (response) => {
+          this.gameStore.game = response.data
+          this.loading = true;
+          axios.get(`http://localhost:5000/api/game/${this.gameStore.game.id}/question/`)
+            .then((response) => {
+              const {question, options} = response.data;
+              this.gameStore.question = question
+              this.gameStore.options = options
+              this.loading = false
+            }).catch((response) => {
+              this.snackbar.text = response.data.message
+              this.snackbar.show = true
+            })
+        }).catch((response) => {
+          this.snackbar.text = response.data.message
+          this.snackbar.show = true
+        })
+    }
+  }
   }
 </script>
 

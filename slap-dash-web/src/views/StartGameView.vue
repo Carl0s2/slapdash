@@ -1,21 +1,19 @@
 <template>
-  <v-sheet class="mx-auto mt5" v-if="loading">
+  <v-sheet class="mx-auto mt12" v-if="loading">
     <h2>
       Loading
     </h2>
     <VProgressLinear color="primary" indeterminate :height="8" />
-
   </v-sheet>
   
-  <v-sheet max-width="300" class="mx-auto mt-5" v-else>
+  <v-sheet max-width="400" class="mx-auto mt-2" v-else>
+   <!-- Todo: add aditional game settings {time limit, Question number, Question source } -->
     <v-form validate-on="input" @submit.prevent ref="form">
       <v-text-field
         v-model="gameStore.user.userName"
         :rules="rules"
         label="Username"
-
       ></v-text-field>
-    
       <v-btn
         color="success"
         class="mt-2"
@@ -60,7 +58,6 @@ export default {
         
         axios.post('http://localhost:5000/api/user/', {name: this.gameStore.user.userName})
           .then( (response) => {
-            console.log(response);
             this.gameStore.user.id = response.data.id
             this.loading = true;
             axios.post('http://localhost:5000/api/game/', {userId: response.data.id})
@@ -73,8 +70,7 @@ export default {
                 this.snackbar.show = true
               })
           }).catch((response) => {
-            console.log(JSON.stringify(response))
-            this.snackbar.text = response.data?.message ?? JSON.stringify(response)
+            this.snackbar.text = response.data?.message
             this.snackbar.show = true
           })
       }
@@ -83,5 +79,8 @@ export default {
 </script>
 
 <style>
-
+h2 {
+  font-size: 1.2rem;
+  text-align: center;
+}
 </style>

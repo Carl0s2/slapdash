@@ -1,6 +1,6 @@
 <template>
   
-  <v-sheet max-width="400" class="mx-auto mt-5">
+  <v-sheet max-width="400" class="mx-auto mt-12">
     <div class="text-center mx-auto mb-1">
       {{ remainingTime }}
     </div>
@@ -13,14 +13,15 @@
             v-for="option in gameStore.options"
             :key="option.id"
             cols="12"
-            md="4"
+            md="6"
             class="d-flex justify-center align-center"
           >
-            <v-item >
+            <v-item>
               <v-btn
                 :disabled="optionSelected || outOfTime"
                 :color="option.id === selected ? 'primary' : ''"
                 @click="submit(option.id)"
+                variant="text"
               > 
                 {{ option.text }}
               </v-btn>
@@ -51,8 +52,6 @@ export default {
        return this.selected !== 0 
       }, 
     }),
-    
-    
     mounted(){
       this.remainingTime = this.gameStore.game.timeLimit
       this.countDownTimer()
@@ -75,12 +74,13 @@ export default {
 
         axios.post(`http://localhost:5000/api/game/${this.gameStore.game.id}/user/${this.gameStore.user.id}/answer/${optionId}`)
           .then( (response) => {
-            console.log(response);
             this.loading = true;
-            // maybe only get score if correct?
+            this.snackbar.color = response.data ? 'success' : ''
+            this.snackbar.text = response.data ? 'Correct': 'False'
+            this.snackbar.show = true
             axios.get(`http://localhost:5000/api/game/${this.gameStore.game.id}/score/${this.gameStore.user.id}`)
               .then((response) => {
-                this.gameStore.score = response.data;
+                this.gameStore.score = response.data.score;
                 // trigger game state into next question
                 this.gameStore.question.id = undefined;
                 this.loading = false

@@ -23,7 +23,7 @@ router.post("/", async (req: Request, res: Response) => {
 router.get("/:id", (req: Request, res: Response) => {
   try{
     const game = gameService.getGame(req.body.id)
-    res.status(201).send(game);
+    res.status(200).send(game);
   } catch (e) {
     res.status(404).send({message: "game not found"})
   }
@@ -39,7 +39,7 @@ router.get("/:id/question", (req: Request, res: Response) => {
     const question = questionService.getQuestionByIndex(game.id, game.questionIndex);
     const options = optionService.getOptionsByQuestionId(question.id);
     
-    res.status(201).send({question, options});
+    res.status(200).send({question, options});
   } catch (e: any) {
     res.status(500).send(JSON.stringify({message: e.message}))
   }
@@ -49,7 +49,7 @@ router.get("/:id/score/:userId", (req: Request, res: Response) => {
   try{
     const game = gameService.getGame(parseInt(req.params.id, 10));
     const score = scoreService.getUserGameScore(parseInt(req.params.userId, 10), game.id);
-    res.status(201).send(score.score);
+    res.status(200).send({score: score.score});
   } catch (e: any) {
     res.status(500).send(JSON.stringify({message: e.message}))
   }
@@ -68,8 +68,7 @@ router.post("/:id/user/:userId/answer/:optionId", (req: Request, res: Response) 
 router.post("/:id/next", (req: Request, res: Response) => {
   try{
     const game = gameService.nextQuestion(parseInt(req.params.id, 10));
-    console.log(game)
-    res.status(202).send(game);
+    res.status(200).send(game);
   } catch (e:any) {
     res.status(500).send(JSON.stringify({message: e.message}))
   }

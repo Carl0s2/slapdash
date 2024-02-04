@@ -1,17 +1,17 @@
 <script lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
 import TheMessage from './components/TheMessage.vue'
 import TheSnackbar from './components/TheSnackbar.vue'
 import StartGameView from './views/StartGameView.vue'
 import NextQuestionView from './views/NextQuestionView.vue'
 import QuestionView from './views/QuestionView.vue'
+import EndView from './views/EndView.vue'
 import {useGameStore} from './stores/game'
 export default {
   setup() {
     const gameStore = useGameStore()
   return {gameStore}
   },
-  components: { TheMessage, StartGameView, TheSnackbar, NextQuestionView, QuestionView }
+  components: { TheMessage, StartGameView, TheSnackbar, NextQuestionView, QuestionView, EndView }
 }
 
 </script>
@@ -24,9 +24,10 @@ export default {
     </div>
   </header>
   <main>
-    <StartGameView v-if="gameStore.gameState === 'start'"></StartGameView>
-    <NextQuestionView v-else-if="gameStore.gameState === 'nextQuestion'"></NextQuestionView>
-    <QuestionView v-else-if="gameStore.gameState === 'question'"></QuestionView>
+    <StartGameView v-if="gameStore.gameState === 'start'" />
+    <NextQuestionView v-else-if="gameStore.gameState === 'nextQuestion'"/>
+    <QuestionView v-else-if="gameStore.gameState === 'question'"/>
+    <EndView v-else-if="gameStore.gameState === 'end'" />
     <TheSnackbar></TheSnackbar>
   </main>
 </template>
@@ -41,31 +42,6 @@ header {
 .mainImage {
   display: block;
   margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
 }
 
 @media (min-width: 1024px) {
@@ -83,15 +59,6 @@ nav a:first-of-type {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
   }
 }
 </style>

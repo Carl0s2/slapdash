@@ -32,7 +32,17 @@ export const useGameStore = defineStore('game', {
         : 'https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg'
     },
     mainMsg(): string {
-      return this.gameState === 'question' ? `Who's that Pokémon?` : "" 
+      // todo: message should be different for disney
+      switch (this.gameState) {
+        case "question":
+          return `Who's that Pokémon?`;
+        case 'start':
+          return `Slap Dash`;
+        case 'end':
+          return `Congratulations ${this.user.userName}`;
+        default:
+          return '';
+      }
     },
     subMsg(): string {
       return this.gameState === 'start' ? "This is a quiz game, where you have 10 rounds to guess the correct character." : ""

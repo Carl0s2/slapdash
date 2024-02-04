@@ -19,7 +19,6 @@ app.get("/", (_req: Request, res: Response) => {
   res.send("Hello World");
 });
 
-// Add this error handling middleware
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong");

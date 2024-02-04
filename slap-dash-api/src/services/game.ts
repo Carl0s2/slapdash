@@ -1,4 +1,3 @@
-import { Answer } from "../models/answer";
 import { Game } from "../models/game";
 import { Option } from "../models/option";
 import { Score } from "../models/score";
@@ -7,7 +6,6 @@ import { dataStore } from "../repository/dataStore";
 import { checkTime } from "../utils";
 import { questionService } from "./question";
 import { scoreService } from "./score";
-import { userService } from "./user";
 
 export module gameService {
   const STORE = dataStore.StoreType.games
@@ -21,9 +19,9 @@ export module gameService {
     const newGame: Omit<Game, "id"> = {
       userId,
       name: name ?? user.name,
-      questionNumber: questionNumber ?? 2, // set back here
+      questionNumber: questionNumber ?? 10, 
       questionIndex: 0,
-      timeLimit: timeLimit ?? 20,
+      timeLimit: timeLimit ?? 10,
       completed: false,
     };
 
@@ -39,7 +37,6 @@ export module gameService {
    
     if (!score) throw new Error("Failed to create score card");
     
-
     // once game is created we need to generate questions
     // could do that here or could generate on the fly on question request
     // could extend to take question types, this could dictate where he questions are being pulled from
