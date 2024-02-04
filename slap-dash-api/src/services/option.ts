@@ -4,7 +4,6 @@ import {Option} from "../models/option";
 export module optionService {
   const STORE = dataStore.StoreType.options
 
-  // todo try and avoid just pass throughs here
   export function createOption(option: Omit<Option, "id">) {
     const newOption = dataStore.createEntity(STORE, option);
     return newOption;

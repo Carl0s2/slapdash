@@ -137,7 +137,6 @@ export module dataStore{
     }
   }
 
-  // I guess you could infer entity type instead of using the storetype but might aswell just be explicit
   // creates new entity with incremeted id
   export function createEntity(storeType: StoreType, entity: Omit<Entity, "id">): Entity | undefined {
     switch (storeType) {
@@ -176,7 +175,6 @@ export module dataStore{
     }
   }
 
-  // set or create? could be dangerous to set if only trying to update. UPSERTS are scary.
   export function updateById(storeType: StoreType, id: number, entity: Entity): Entity | undefined{
     const store = getStore(storeType);
     if (!store) return;
