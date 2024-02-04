@@ -1,6 +1,12 @@
 <template>
-  <v-sheet class="mx-auto mt-5">
-    <v-item-group :disabled="selected">
+  
+  <v-sheet max-width="400" class="mx-auto mt-5">
+    <div class="text-center mx-auto mb-1">
+      {{ remainingTime }}
+    </div>
+    <v-progress-linear color="primary" :model-value="remainingTime" :max="gameStore.game.timeLimit" :height="5"></v-progress-linear>
+
+    <v-item-group>
       <v-container>
         <v-row>
           <v-col
@@ -8,23 +14,16 @@
             :key="option.id"
             cols="12"
             md="4"
+            class="d-flex justify-center align-center"
           >
-            <v-item v-slot="{ isSelected, toggle }">
-              <v-card
-                :color="isSelected ? 'primary' : ''"
-                class="d-flex align-center"
-                dark
-                height="200"
-                @click="toggle"
-              >
-                <v-scroll-y-transition>
-                  <div
-                    class="text-h3 flex-grow-1 text-center"
-                  >
-                    {{ option.text }}
-                  </div>
-                </v-scroll-y-transition>
-              </v-card>
+            <v-item >
+              <v-btn
+                :disabled="optionSelected || outOfTime"
+                :color="option.id === selected ? 'primary' : ''"
+                @click="submit(option.id)"
+              > 
+                {{ option.text }}
+              </v-btn>
             </v-item>
           </v-col>
         </v-row>
@@ -45,31 +44,56 @@ export default {
     },   
    data: () => ({
       loading: false,
-      selected: false
+      selected: 0,
+      remainingTime: 20,
+      outOfTime: false,
+      get optionSelected() : boolean {
+       return this.selected !== 0 
+      }, 
     }),
-   // methods: {
-    //  async submit(){
-      //   axios.post(`http://localhost:5000/api/game/${this.gameStore.game.id}/next/`)
-      //     .then( (response) => {
-      //       console.log(response);
-      //       this.gameStore.game = response.data
-      //       this.loading = true;
-      //       axios.post(`http://localhost:5000/api/game/${this.gameStore.game.id}/question/`)
-      //         .then((response) => {
-      //           const {question, options} = response.data;
-      //           this.gameStore.question = question
-      //           this.gameStore.options = options
-      //           this.loading = false
-      //         }).catch((response) => {
-      //           this.snackbar.text = response.data.message
-      //           this.snackbar.show = true
-      //         })
-      //     }).catch((response) => {
-      //       this.snackbar.text = response.data.message
-      //       this.snackbar.show = true
-      //     })
-      // }
-    //},
+    
+    
+    mounted(){
+      this.remainingTime = this.gameStore.game.timeLimit
+      this.countDownTimer()
+    },
+    methods: {
+      countDownTimer () {
+        if (this.remainingTime > 0 && !this.optionSelected) {
+          setTimeout(() => {
+              this.remainingTime -= 1
+              this.countDownTimer()
+          }, 1000)
+        }
+      },
+     async submit(optionId: number){
+      if (this.outOfTime) {
+        alert('too slow')
+        return
+      }
+      this.selected = optionId;
+
+        axios.post(`http://localhost:5000/api/game/${this.gameStore.game.id}/user/${this.gameStore.user.id}/answer/${optionId}`)
+          .then( (response) => {
+            console.log(response);
+            this.loading = true;
+            // maybe only get score if correct?
+            axios.get(`http://localhost:5000/api/game/${this.gameStore.game.id}/score/${this.gameStore.user.id}`)
+              .then((response) => {
+                this.gameStore.score = response.data;
+                // trigger game state into next question
+                this.gameStore.question.id = undefined;
+                this.loading = false
+              }).catch((response) => {
+                this.snackbar.text = response.data.message
+                this.snackbar.show = true
+              })
+          }).catch((response) => {
+            this.snackbar.text = response.data.message
+            this.snackbar.show = true
+          })
+      }
+    },
   }
 </script>
 

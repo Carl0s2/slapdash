@@ -3,13 +3,14 @@ import { defineStore } from 'pinia'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
-     game: {id: undefined, questionIndex:0, questionNumber: 0, timeLimit: undefined,completed: undefined},
+     game: {id: undefined, questionIndex:0, questionNumber: 0, timeLimit: 20,completed: undefined},
      question: {id: undefined, questionIndex: 0, question: "", imageUrl: ""},
-     options: [{id: undefined, text: ""}],
+     options: [{id: 0, text: ""}],
      score: 0,
-     user: {userId: undefined, userName: undefined}
+     user: {id: undefined, userName: undefined}
   }),
   getters:{
+    // manage game state
     gameState(): string {
       if (!this.game.id) {
         return 'start'

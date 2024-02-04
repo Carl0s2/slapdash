@@ -61,7 +61,7 @@ export default {
         axios.post('http://localhost:5000/api/user/', {name: this.gameStore.user.userName})
           .then( (response) => {
             console.log(response);
-            this.gameStore.user.userId = response.data.id
+            this.gameStore.user.id = response.data.id
             this.loading = true;
             axios.post('http://localhost:5000/api/game/', {userId: response.data.id})
               .then((response) => {
