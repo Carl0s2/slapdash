@@ -13,7 +13,7 @@
             v-for="option in gameStore.options"
             :key="option.id"
             cols="12"
-            md="6"
+            md="12"
             class="d-flex justify-center align-center"
           >
             <v-item>

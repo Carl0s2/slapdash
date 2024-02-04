@@ -1,7 +1,8 @@
 <template>
   <v-sheet class="mx-auto mt12" v-if="loading">
+    <!-- Could have some fun with differnt messages here -->
     <h2>
-      Loading
+      Creating your game
     </h2>
     <VProgressLinear color="primary" indeterminate :height="8" />
   </v-sheet>
@@ -55,7 +56,7 @@ export default {
         //@ts-expect-error Object is of type 'unknown'.ts(2571) 
         const { valid } = await this.$refs.form.validate()
         if (!valid) return;
-        
+        // todo: if userid alrady exists don't create a new user every time they start a new game
         axios.post('http://localhost:5000/api/user/', {name: this.gameStore.user.userName})
           .then( (response) => {
             this.gameStore.user.id = response.data.id
