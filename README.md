@@ -50,6 +50,8 @@ The repository layer could connect to a database, however I built an in-memory d
 
 I tried to create the Entity types as if they were going to be used in a normalised data base.
 
+I didn't focus too much on validation or security for this project, mainly just to save time.
+
 ### Stretch goals
 
 ### Ensure that this game works with and without javascript
