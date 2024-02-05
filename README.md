@@ -31,7 +31,7 @@ I used the Vuetify plugin to handle the base componenets for the UI. I am a fan 
 
 I used axios as the HTTP client to submit requests to the backend API
 
-I have hosted the static site on a free hosting platform infinityfree.
+I have hosted the static site on a free hosting platform infinityfree, and the web API is hosted on AWS.
 
 For the backend I created a new node project and used the express library to create an API.
 
