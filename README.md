@@ -69,6 +69,13 @@ Because of design pattern it would be easy to mock data between layers
 It's a very simple application, but I did see that vue integrates nicely with cypress.
 You could do both component testing and E2E testing.
 
+### Problems
+Initially this was going to be using the disney character api, but the instability of the api made it hard to test. So I changed over to using a pokemon character api.
+
+### Future improvements
+If I continued this project I would be interested in fully developing the multiplayer aspect of the game. The API can already kind of handle it, but with a few tweeks it would be possible to have a host control a game for multiple users. And have them connect based on game name.
+
+I would also add settings to the game creation endpoint to allow the user to select what api the questions should be generated from (disney or pokemon), time limit, and question number.
 
 
 
