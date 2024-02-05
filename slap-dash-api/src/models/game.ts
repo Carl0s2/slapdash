@@ -1,9 +1,9 @@
 export interface Game {
-  id: number; // guid
-  name: string; // used as url???
-  userId: number; // forign key - if we are going to have users this would need to be multiple. This could serve as a host id also if we wanted to have a host
+  id: number; 
+  name: string; // could be used in the url or as a search to allow for users to join
+  userId: number; // foreign key - This could serve as a host id also if we wanted to have a host control the game and other users could join
   questionIndex: number; // index of the current question
-  questionNumber: number; // number of questionss
+  questionNumber: number; // total number of questions
   timeLimit: number; // time limit for each question
   completed: boolean; // has the game been completed
 };

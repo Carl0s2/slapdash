@@ -9,14 +9,11 @@ const router = Router();
 // Create Game
 router.post("/", async (req: Request, res: Response) => {
   try{
-
     const game = await gameService.createGame(req.body.userId);
-    
     res.status(201).send(game);
   } catch (e: any){
     res.status(500).send(JSON.stringify({message: e.message}))
   }
-
 });
 
 // get game
@@ -29,9 +26,6 @@ router.get("/:id", (req: Request, res: Response) => {
   }
 });
 
-// TODO
-// to inforce the round timer, a timestamp should be taken here, and then when the user submits answer
-// we can validate (with some margin of error) that the answer was submitted inside the time limit
 // get question and options
 router.get("/:id/question", (req: Request, res: Response) => {
   try{
@@ -44,6 +38,7 @@ router.get("/:id/question", (req: Request, res: Response) => {
     res.status(500).send(JSON.stringify({message: e.message}))
   }
 });
+
 // get user score for the game
 router.get("/:id/score/:userId", (req: Request, res: Response) => {
   try{
@@ -54,6 +49,7 @@ router.get("/:id/score/:userId", (req: Request, res: Response) => {
     res.status(500).send(JSON.stringify({message: e.message}))
   }
 });
+
 // submit user answer
 router.post("/:id/user/:userId/answer/:optionId", (req: Request, res: Response) => {
   try{
@@ -64,6 +60,7 @@ router.post("/:id/user/:userId/answer/:optionId", (req: Request, res: Response) 
     res.status(500).send(JSON.stringify({message: e.message}))
   }
 });
+
 // move to next round / start round
 router.post("/:id/next", (req: Request, res: Response) => {
   try{

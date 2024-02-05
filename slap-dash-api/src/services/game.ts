@@ -45,7 +45,6 @@ export module gameService {
     return game;
   }
 
-
   export function submitQuestionAnswer(gameId: number, userId: number, optionId: number) : boolean {
      const game = getGame(gameId);
      const score = dataStore.getByComposite(dataStore.StoreType.scores, "userId", "gameId", userId, gameId) as Score;
@@ -63,7 +62,6 @@ export module gameService {
       return true;
      }
      return false;
-     
   }
 
   // handle starting next round and ending game

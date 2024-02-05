@@ -37,6 +37,4 @@ Please only consider doing these once your game contains all the basic rules and
 * Ensure that this game works with and without javascript
 * write tests, or describe your testing plan
 
-Next steps
-1. Meet with Max (director of software engineering), as well as other members of staff as part of “cultural fit”. This is also an opportunity for you to understand how CYB works, outside of the engineering team.
-2. Offer 🤝
+

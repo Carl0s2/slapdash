@@ -8,13 +8,6 @@ import {Answer} from "../models/answer";
 export module dataStore{
   export type Entity = Game | Question | Option | User | Score | Answer;
   export type DataStore = Game[] | Question[] | User[] | Score[] | Option[] | Answer[];
-  let games: Game[] = [];
-  let questions: Question[] = [];
-  let users: User[] = [];
-  let scores: Score[] = [];
-  let options: Option[] = [];
-  let answers: Answer[] = [];
-  
   export enum StoreType {
     games = 'games',
     questions = "questions",
@@ -23,6 +16,15 @@ export module dataStore{
     options = "options",
     answers = "answers"
   };
+
+  // These are b
+  const games: Game[] = [];
+  const questions: Question[] = [];
+  const users: User[] = [];
+  const scores: Score[] = [];
+  const options: Option[] = [];
+  const answers: Answer[] = [];
+  
 
   export function getStore(storeType: StoreType) : DataStore | undefined{
     switch (storeType) {
@@ -43,30 +45,30 @@ export module dataStore{
     }
   };
 
-  // probably don't need this but could be useful to just dump a table
-  export function setStore(storeType: StoreType, store: DataStore): DataStore | undefined{
-    switch (storeType) {
-      case StoreType.games:
-        games = store as Game[];
-        return games;
-      case StoreType.questions:
-        questions = store as Question[];
-        return questions;
-      case StoreType.options:
-        options = store as Option[];
-        return options;
-      case StoreType.users:
-        users = store as User[]
-        return users;
-      case StoreType.scores:
-        scores = store as Score[]
-        return scores;
-      case StoreType.answers:
-        answers = store as Answer[]
-      default:
-        return;
-    }
-  }
+  // probably don't need this but could be useful to just initiate a store
+  // export function setStore(storeType: StoreType, store: DataStore): DataStore | undefined{
+  //   switch (storeType) {
+  //     case StoreType.games:
+  //       games = store as Game[];
+  //       return games;
+  //     case StoreType.questions:
+  //       questions = store as Question[];
+  //       return questions;
+  //     case StoreType.options:
+  //       options = store as Option[];
+  //       return options;
+  //     case StoreType.users:
+  //       users = store as User[]
+  //       return users;
+  //     case StoreType.scores:
+  //       scores = store as Score[]
+  //       return scores;
+  //     case StoreType.answers:
+  //       answers = store as Answer[]
+  //     default:
+  //       return;
+  //   }
+  // }
   
   // default will allow this to be used as get by id
   export function getByKey(storeType: StoreType, id: number | string, key: string = 'id' ){
@@ -107,6 +109,7 @@ export module dataStore{
     }
   }
 
+  // gets entity with two matching values
   export function getByComposite(storeType: StoreType, key1: string, key2: string, value1: string | number, value2: string | number) {
     switch (storeType) {
       case StoreType.scores:

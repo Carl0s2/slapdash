@@ -1,6 +1,6 @@
 export interface Answer {
-  id: number; // guid
-  userId: number; // forign key
-  optionId: number; // forigne key
-  questionId: number;
+  id: number; 
+  userId: number; // foreign key
+  optionId: number; // foreign key
+  questionId: number; // foreign key
 };

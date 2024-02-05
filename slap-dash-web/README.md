@@ -50,3 +50,11 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+### Local env
+
+If running slap-dash-api locally, you need to set up an .env.local file with the content
+
+```sh
+    VITE_BASEURL="http://localhost:5000/"
+```

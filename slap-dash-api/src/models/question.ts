@@ -1,5 +1,5 @@
 export interface Question {
-  id: number; // guid
+  id: number;
   gameId: number; // foreign key to game
   question: string; // the question
   imageUrl: string; // the image url
