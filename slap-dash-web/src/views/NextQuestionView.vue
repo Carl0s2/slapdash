@@ -32,7 +32,7 @@ export default {
     }),
   mounted(){
     if(this.gameStore.game.questionIndex === this.gameStore.game.questionNumber){
-      axios.post(`http://localhost:5000/api/game/${this.gameStore.game.id}/next/`)
+      axios.post(`${import.meta.env.VITE_BASEURL}api/game/${this.gameStore.game.id}/next/`)
         .then( (response) => {
           this.gameStore.game = response.data
         }).catch((response) => {
@@ -43,11 +43,11 @@ export default {
   },
   methods: {
     async submit(){
-      axios.post(`http://localhost:5000/api/game/${this.gameStore.game.id}/next/`)
+      axios.post(`${import.meta.env.VITE_BASEURL}api/game/${this.gameStore.game.id}/next/`)
         .then( (response) => {
           this.gameStore.game = response.data
           this.loading = true;
-          axios.get(`http://localhost:5000/api/game/${this.gameStore.game.id}/question/`)
+          axios.get(`${import.meta.env.VITE_BASEURL}api/game/${this.gameStore.game.id}/question/`)
             .then((response) => {
               const {question, options} = response.data;
               this.gameStore.question = question

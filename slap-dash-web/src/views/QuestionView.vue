@@ -72,13 +72,13 @@ export default {
       }
       this.selected = optionId;
 
-        axios.post(`http://localhost:5000/api/game/${this.gameStore.game.id}/user/${this.gameStore.user.id}/answer/${optionId}`)
+        axios.post(`${import.meta.env.VITE_BASEURL}api/game/${this.gameStore.game.id}/user/${this.gameStore.user.id}/answer/${optionId}`)
           .then( (response) => {
             this.loading = true;
             this.snackbar.color = response.data ? 'success' : ''
             this.snackbar.text = response.data ? 'Correct': 'False'
             this.snackbar.show = true
-            axios.get(`http://localhost:5000/api/game/${this.gameStore.game.id}/score/${this.gameStore.user.id}`)
+            axios.get(`${import.meta.env.VITE_BASEURL}api/game/${this.gameStore.game.id}/score/${this.gameStore.user.id}`)
               .then((response) => {
                 this.gameStore.score = response.data.score;
                 // trigger game state into next question
