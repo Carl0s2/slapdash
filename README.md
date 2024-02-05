@@ -55,8 +55,9 @@ I didn't focus too much on validation or security for this project, mainly just 
 ### Stretch goals
 
 ### Ensure that this game works with and without javascript
-My choice of technologies might cause some issues here lol
-No, my assumption of what this means is that the game should work without the front end UI driving it?
+My choice of technologies might cause some issues here...
+
+My assumption of what this means is that the game should work without the front end UI driving it?
 And while testing locally, I was able to play the game using postman
 
 ### Write tests, or describe your testing plan
