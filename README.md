@@ -75,7 +75,7 @@ Initially this was going to be using the disney character api, but the instabili
 ### Future improvements
 If I continued this project I would be interested in fully developing the multiplayer aspect of the game. The API can already kind of handle it, but with a few tweeks it would be possible to have a host control a game for multiple users. And have them connect based on game name.
 
+It would be good to add doumentation to the API, and I could generate that using a tool like swagger
+
 I would also add settings to the game creation endpoint to allow the user to select what api the questions should be generated from (disney or pokemon), time limit, and question number.
-
-
 
